@@ -18,30 +18,58 @@ There is no build/lint/test tooling — it's static files served as-is.
 - **Deploy**: pushing to `main` on GitHub auto-publishes via GitHub Pages (see Deployment below). There is
   no separate build/deploy command — the repo *is* the deployed output.
 
+## Design direction
+
+The site went through a full rebrand (2026-09-13): from a "terminal/hacker" aesthetic to a professional
+"enterprise cybersecurity & software developer" look aimed at corporate recruiters. This is the current,
+intended direction — don't revert toward the old terminal-everywhere look without being asked.
+
+- **Typography**: sans-serif (Inter) for all headings, nav, and body copy. Monospace (JetBrains Mono) is
+  **scoped only** to: the interactive terminal component, technical tag/pill chips (`.tag`), and the cert
+  icon initials. Don't spread monospace back into headings or prose.
+- **Palette**: dark slate/charcoal (`--bg`, `--panel` tokens in `css/style.css`), white/near-white text,
+  electric blue accent (`--accent`) as primary, teal (`--teal`) as a secondary/"earned" accent, red
+  (`--danger`) reserved for the terminal's permission-denied state. All tokens live in `:root` at the top
+  of `css/style.css`.
+- **Cards over ASCII**: certifications, projects, GitHub stats, and the "coursework" panel are all clean
+  card/tile components now (`.cert-card`, `.project-card`, `.stat-tile`, `.panel-card`) — not simulated
+  terminal/log output. Only the actual `#term` section terminal keeps the retro chrome.
+
 ## Architecture
 
 Single-page site (`index.html`) with anchor-linked sections, styled by one stylesheet
 (`css/style.css`) and one script (`js/script.js`). No routing, no components, no templating.
 
-- **`index.html`** — all content lives here, in order: hero, about, certs, projects, experience, skills,
-  github, an interactive terminal easter egg, contact. Content is hand-authored from Navkirat's resume
-  (`assets/Navkirat_Wander_Resume.pdf`, also linked as the downloadable resume button) — there is no CMS
-  or data file; updating content means editing the HTML directly.
-- **`css/style.css`** — design tokens live in `:root` at the top (colors, font, spacing). The whole site
-  is a dark "terminal" aesthetic: monospace type (JetBrains Mono), a reusable `.terminal-window` component
-  (titlebar dots + body) used for the hero, the about section, the GitHub stats panel, and the interactive
-  terminal. `.reveal` / `.reveal.in` classes drive scroll-triggered fade-ins via an IntersectionObserver in
-  the JS. Responsive breakpoints at 860px and 720px.
-- **`js/script.js`** — four independent behaviors, no shared state between them: (1) hero typewriter effect
-  that types into `#heroTyped`, (2) `IntersectionObserver`-based scroll reveal for `.reveal` elements,
-  (3) a client-side fetch to `api.github.com/users/Navkirat1` that renders live stats into `#githubStats`
-  (has a fallback message if the fetch fails), (4) an interactive terminal (`#termInput`/`#termOutput`)
-  with a `commands` object dispatch table — commands either print text or `scrollToSection(id)`. User input
-  is escaped via `escapeHtml()` before being echoed back, since it's rendered with `innerHTML`.
-- Terminal-style text blocks (e.g. `.static-body`, the github stats template literal) must **not** have
-  literal newlines between `<span>` elements in the source — the spans are `display: block` and rely on
-  that for line breaks; an extra literal newline renders as a visible blank line (pre-wrap + block spans
-  double up). Keep those blocks on one line when editing.
+- **`index.html`** — content order: hero, about, certs, projects, experience, skills, github, interactive
+  terminal, contact, plus a hidden cert-verification modal at the end of `<body>`. Content is hand-authored
+  from Navkirat's resume (`assets/Navkirat_Wander_Resume.pdf`, also linked as the downloadable resume
+  button) — there is no CMS or data file; updating content means editing the HTML directly.
+- **`css/style.css`** — design tokens in `:root` (see Design direction above). `.reveal` / `.reveal.in`
+  classes drive scroll-triggered fade-ins via an IntersectionObserver in the JS. Responsive breakpoints at
+  860px, 720px, and 340px (checked down to 280px wide for foldable-phone widths — nothing should overflow
+  or clip below that).
+- **`js/script.js`** — independent behaviors, no shared state between them:
+  1. `IntersectionObserver`-based scroll reveal for `.reveal` elements.
+  2. A client-side fetch to `api.github.com/users/Navkirat1` that renders live stats as tiles into
+     `#githubStats` (has a fallback message if the fetch fails).
+  3. **Cert verification modal**: `certData` object keyed by cert id (`google`, `securityplus`), each with
+     a `verifyUrl`. Clicking a `[data-cert]` button calls `openCertModal(id)` — if `verifyUrl` is set, it
+     opens that link directly in a new tab (`window.open`); if empty, it opens the in-page modal showing
+     issuer/date/description instead, with a note that a public link is "coming soon." Currently both
+     Google Cybersecurity Professional Certificate and CompTIA Security+ have real `verifyUrl`s set
+     (Coursera share link and Credly public badge URL respectively), so they link out — the modal fallback
+     path still exists in code for any future cert added without a link yet (e.g. Microsoft SC-900, which
+     has no verify button at all since it isn't earned yet — just an "In Progress" badge + progress bar).
+  4. An interactive terminal (`#termInput`/`#termOutput`) with a `commands` object dispatch table —
+     commands either print text or `scrollToSection(id)`. A separate `privilegedCommands` check
+     (`sudo`/`su`/`root`/`admin`) short-circuits before the dispatch table and always prints a styled
+     "Permission Denied" message (`.danger` class, red) rather than executing anything. User input is
+     escaped via `escapeHtml()` before being echoed back, since it's rendered with `innerHTML`.
+- Card/tile markup (project cards, cert cards, stat tiles) is normal block-level HTML — no whitespace
+  gotchas there. The one place that still matters: if new monospace terminal-style text blocks are added
+  inside `.terminal-body`, don't put literal newlines between `<span>` elements — those spans are
+  `display: block`, and `white-space: pre-wrap` on the parent turns a stray newline into a visible blank
+  line. Keep such blocks on one line when editing.
 
 ## Deployment
 
@@ -52,22 +80,27 @@ Single-page site (`index.html`) with anchor-linked sections, styled by one style
   (`navkiratwander.dev`) points Pages at the custom domain.
 - DNS is managed at **Porkbun** (Cloudflare-powered DNS panel there): 4 `A` records on the apex (`@`) to
   GitHub Pages' IPs (185.199.108/109/110/111.153), plus a `CNAME` for `www` → `navkirat1.github.io`.
-- `gh` CLI is already authenticated locally as `Navkirat1` — use `gh api repos/Navkirat1/navkiratwander.dev/pages`
-  to check Pages/HTTPS status, and `gh api -X PUT ... -f https_enforced=true` to toggle HTTPS enforcement
-  once GitHub has issued the custom-domain TLS cert (this is automatic on GitHub's side but not instant —
-  can take anywhere from minutes to a few hours after DNS propagates).
+- HTTPS is fully live and enforced (`https_enforced: true`). `gh` CLI is authenticated locally as
+  `Navkirat1` — use `gh api repos/Navkirat1/navkiratwander.dev/pages` to check Pages/HTTPS status. If the
+  custom domain or DNS ever changes, re-provisioning the cert can take anywhere from minutes to about an
+  hour; clearing and re-setting the `cname` field via the API (`PUT .../pages -f cname=`) forces GitHub to
+  restart cert issuance if it seems stuck.
 
 ## Ongoing goals for this project
 
 This is a living project, not a one-off — Navkirat plans to keep iterating: refining the look, adding more
 content/projects/certs over time, fixing bugs, and improving layout across device sizes (regular mobile,
-foldables, tablet, desktop). When making changes, verify responsively rather than assuming — the site has
-already been checked at desktop and mobile (375px) widths with the Browser pane tool; re-check affected
-breakpoints after layout changes, including unusually narrow/wide viewports for foldable phones.
+foldables, tablet, desktop). Verify responsively rather than assuming — check both the standard 375px
+mobile width and something narrower (~280px, for foldables) after layout changes, in addition to desktop.
 
-## Known open item
+## Known open items
 
-The Projects section (Secure Discord Automation Bot, HTB pentesting labs, Cyber Strike Challenge) is
-written as case-study text rather than linking to live repos, because Navkirat's real project code isn't
-pushed publicly yet (GitHub `Navkirat1` currently only has git-practice tutorial repos). Revisit this if/when
-that code gets pushed — the Discord bot in particular would be worth linking to once sanitized.
+- **HayuuugeBot** (Python/Discord/SQLite/RBAC project card) has a disabled "Repository — Coming Soon"
+  button — Navkirat is preparing that repo to publish separately. Swap `<button class="btn btn-disabled" disabled>`
+  for a real `<a href="...">` once the repo is public, and remove the `disabled`/dashed styling.
+- **Microsoft SC-900** is in-progress (not yet earned) — no verify button, just a status badge + progress
+  bar. Once earned, give it a proper "Earned" cert-card treatment matching Google/Security+, with a real
+  verify link if one exists (Microsoft Learn / Credly).
+- Two other projects from an earlier draft of this redesign — "Nexus" (university coursework, cloud
+  companion-robot management system) and a C++ e-commerce OOP project — were explicitly **dropped** by
+  Navkirat and should not be re-added without being asked again.

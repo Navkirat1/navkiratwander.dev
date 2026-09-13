@@ -27,38 +27,6 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 revealEls.forEach(el => revealObserver.observe(el));
 
-// ===== Hero typewriter =====
-const heroLines = [
-  { type: 'ln', text: '$ whoami' },
-  { type: 'out', text: 'navkirat_wander — cybersecurity student & builder' },
-  { type: 'ln', text: '$ cat status.txt' },
-  { type: 'out', text: 'pursuing b.cis @ university of the fraser valley' },
-  { type: 'ln', text: '$ certifications --list' },
-  { type: 'out', text: 'google cybersecurity professional | comptia security+' },
-  { type: 'ln', text: '$ _' },
-];
-
-async function typeHero() {
-  const el = document.getElementById('heroTyped');
-  for (const line of heroLines) {
-    const span = document.createElement('span');
-    span.className = line.type;
-    el.appendChild(span);
-    if (line.text === '$ _') {
-      span.textContent = line.text;
-      break;
-    }
-    for (const ch of line.text) {
-      span.textContent += ch;
-      await sleep(line.type === 'ln' ? 26 : 14);
-    }
-    el.appendChild(document.createElement('br'));
-    await sleep(180);
-  }
-}
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-typeHero();
-
 // ===== GitHub live stats =====
 async function loadGithubStats() {
   const el = document.getElementById('githubStats');
@@ -67,26 +35,80 @@ async function loadGithubStats() {
     if (!res.ok) throw new Error('bad response');
     const data = await res.json();
     const joined = new Date(data.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
-    el.innerHTML = `<span class="ln">$ curl -s api.github.com/users/Navkirat1</span><span class="out">login: <span class="accent">${data.login}</span></span><span class="out">public_repos: <span class="accent">${data.public_repos}</span></span><span class="out">followers: <span class="accent">${data.followers}</span></span><span class="out">member_since: <span class="accent">${joined}</span></span><span class="ln">$ _</span>`;
+    el.innerHTML = `
+      <div class="stat-tile"><span class="stat-value">${data.public_repos}</span><span class="stat-label">Public Repos</span></div>
+      <div class="stat-tile"><span class="stat-value">${data.followers}</span><span class="stat-label">Followers</span></div>
+      <div class="stat-tile"><span class="stat-value">${joined}</span><span class="stat-label">Member Since</span></div>
+    `;
   } catch (e) {
-    el.innerHTML = `<span class="ln">$ curl -s api.github.com/users/Navkirat1</span><span class="out">unable to reach github api right now — <a href="https://github.com/Navkirat1" target="_blank" rel="noopener">view profile directly</a></span><span class="ln">$ _</span>`;
+    el.innerHTML = `<div class="stat-tile" style="grid-column: 1 / -1;"><span class="stat-label">Unable to reach the GitHub API right now — <a href="https://github.com/Navkirat1" target="_blank" rel="noopener">view profile directly</a>.</span></div>`;
   }
 }
 loadGithubStats();
 
+// ===== Certification verification modal =====
+const certData = {
+  google: {
+    name: 'Google Cybersecurity Professional Certificate',
+    issuer: 'Google · via Coursera',
+    date: 'Issued September 2025',
+    description: 'Covers security operations, incident response fundamentals, network defense, and SIEM tools as part of Google\'s professional certificate program.',
+    verifyUrl: 'https://coursera.org/share/e64ba846859d13dbc3e5c9b593a7bca1'
+  },
+  securityplus: {
+    name: 'CompTIA Security+',
+    issuer: 'CompTIA',
+    date: 'Issued October 2025',
+    description: 'Validates baseline skills in network security, cryptography, threat management, and identity & access management.',
+    verifyUrl: 'https://www.credly.com/badges/406a1339-602c-4643-bfe1-7985be571ee0/public_url'
+  }
+};
+
+const certModalBackdrop = document.getElementById('certModalBackdrop');
+const certModalClose = document.getElementById('certModalClose');
+
+function openCertModal(certId) {
+  const cert = certData[certId];
+  if (!cert) return;
+  if (cert.verifyUrl) {
+    window.open(cert.verifyUrl, '_blank', 'noopener');
+    return;
+  }
+  certModalBackdrop.querySelector('#certModalTitle').textContent = cert.name;
+  certModalBackdrop.querySelector('.modal-issuer').textContent = `${cert.issuer} — ${cert.date}`;
+  certModalBackdrop.querySelector('.modal-desc').textContent = cert.description;
+  certModalBackdrop.querySelector('.modal-note').textContent = 'Public verification link coming soon.';
+  certModalBackdrop.hidden = false;
+}
+
+function closeCertModal() {
+  certModalBackdrop.hidden = true;
+}
+
+document.querySelectorAll('[data-cert]').forEach(btn => {
+  btn.addEventListener('click', () => openCertModal(btn.dataset.cert));
+});
+certModalClose.addEventListener('click', closeCertModal);
+certModalBackdrop.addEventListener('click', (e) => {
+  if (e.target === certModalBackdrop) closeCertModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !certModalBackdrop.hidden) closeCertModal();
+});
+
 // ===== Interactive terminal =====
 const termInput = document.getElementById('termInput');
 const termOutput = document.getElementById('termOutput');
+const privilegedCommands = ['sudo', 'su', 'root', 'admin'];
 
 const commands = {
-  help: () => `available commands: <span class="accent">about, certs, projects, skills, contact, whoami, sudo, clear</span>`,
-  whoami: () => `navkirat_wander — b.cis student, ufv | security+ &amp; google cybersecurity certified`,
-  about: () => { scrollToSection('about'); return 'jumping to about...'; },
-  certs: () => { scrollToSection('certs'); return 'jumping to certifications...'; },
-  projects: () => { scrollToSection('projects'); return 'jumping to projects...'; },
-  skills: () => { scrollToSection('skills'); return 'jumping to skills...'; },
-  contact: () => { scrollToSection('contact'); return 'jumping to contact...'; },
-  sudo: () => `nice try. permission denied — but feel free to just <a href="mailto:navw604@gmail.com">email me</a>.`,
+  help: () => `Available commands: <span class="mono">about, certs, projects, skills, contact, whoami, clear</span>`,
+  whoami: () => `navkirat_wander — B.CIS student, UFV | Security+ &amp; Google Cybersecurity certified`,
+  about: () => { scrollToSection('about'); return 'Jumping to About...'; },
+  certs: () => { scrollToSection('certs'); return 'Jumping to Certifications...'; },
+  projects: () => { scrollToSection('projects'); return 'Jumping to Projects...'; },
+  skills: () => { scrollToSection('skills'); return 'Jumping to Skills...'; },
+  contact: () => { scrollToSection('contact'); return 'Jumping to Contact...'; },
   clear: () => { termOutput.innerHTML = ''; return null; },
 };
 
@@ -108,12 +130,17 @@ termInput.addEventListener('keydown', (e) => {
   if (!raw) return;
   printLine(`guest@navkiratwander.dev:~$ ${escapeHtml(raw)}`, 'cmd');
   const key = raw.toLowerCase().split(' ')[0];
-  const handler = commands[key];
-  if (handler) {
-    const result = handler();
-    if (result) printLine(result);
+
+  if (privilegedCommands.includes(key)) {
+    printLine('Permission Denied: This incident will be reported. Please contact navw604@gmail.com to request elevated access.', 'danger');
   } else {
-    printLine(`command not found: ${escapeHtml(raw)} — type <span class="accent">help</span>`);
+    const handler = commands[key];
+    if (handler) {
+      const result = handler();
+      if (result) printLine(result);
+    } else {
+      printLine(`Command not found: ${escapeHtml(raw)} — type <span class="mono">help</span>`);
+    }
   }
   termInput.value = '';
 });
