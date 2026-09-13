@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navkirat Wander — Cybersecurity Student &amp; Builder</title>
+<meta name="description" content="Navkirat Wander — Cybersecurity student at UFV. Security+ &amp; Google Cybersecurity certified. Projects in threat mitigation, secure automation, and penetration testing.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="scanlines" aria-hidden="true"></div>
+<div class="noise" aria-hidden="true"></div>
+
+<!-- NAV -->
+<header class="site-header" id="top">
+  <nav class="nav">
+    <a href="#top" class="brand">
+      <span class="brand-bracket">[</span><span class="brand-text">nw</span><span class="brand-bracket">]</span>
+      <span class="brand-cursor">_</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about"><span class="idx">01</span>about</a></li>
+      <li><a href="#certs"><span class="idx">02</span>certs</a></li>
+      <li><a href="#projects"><span class="idx">03</span>projects</a></li>
+      <li><a href="#experience"><span class="idx">04</span>experience</a></li>
+      <li><a href="#skills"><span class="idx">05</span>skills</a></li>
+      <li><a href="#github"><span class="idx">06</span>github</a></li>
+      <li><a href="#contact"><span class="idx">07</span>contact</a></li>
+      <li><a href="assets/Navkirat_Wander_Resume.pdf" target="_blank" rel="noopener" class="nav-resume">resume.pdf</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="terminal-window hero-terminal">
+      <div class="terminal-titlebar">
+        <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+        <span class="terminal-title">navkirat@ufv:~$</span>
+      </div>
+      <div class="terminal-body" id="heroTyped" aria-live="polite"></div>
+    </div>
+
+    <h1 class="hero-name">Navkirat Wander</h1>
+    <p class="hero-tagline">
+      Cybersecurity Student <span class="dim">//</span> Secure Systems Builder <span class="dim">//</span> UFV, BC
+    </p>
+    <p class="hero-sub">
+      Bachelor of Computer Information Systems @ University of the Fraser Valley — hunting misconfigurations,
+      hardening code, and shipping small tools that don't leak secrets.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-primary">./view-projects</a>
+      <a href="#contact" class="btn btn-ghost">./get-in-touch</a>
+      <a href="assets/Navkirat_Wander_Resume.pdf" target="_blank" rel="noopener" class="btn btn-ghost">./resume.pdf</a>
+    </div>
+    <div class="hero-socials">
+      <a href="https://github.com/Navkirat1" target="_blank" rel="noopener" aria-label="GitHub">github</a>
+      <span class="sep">·</span>
+      <a href="https://linkedin.com/in/navkiratwander" target="_blank" rel="noopener" aria-label="LinkedIn">linkedin</a>
+      <span class="sep">·</span>
+      <a href="mailto:navw604@gmail.com" aria-label="Email">email</a>
+    </div>
+  </div>
+  <a href="#about" class="scroll-cue" aria-label="Scroll down">
+    <span></span>
+  </a>
+</section>
+
+<main>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <h2 class="section-heading"><span class="tag">01</span> about</h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          I'm a Computer Information Systems student at the <strong>University of the Fraser Valley</strong>,
+          currently in Co-op Education, focused on the security side of software: how systems get broken,
+          and how to build them so they don't.
+        </p>
+        <p>
+          Before this, I spent two years as an SAP Operations Clerk keeping inventory and audit records honest
+          across hundreds of SKUs in a high-volume retail environment — the same instinct for "does this data
+          actually match reality" now shows up in how I approach logs, configs, and access control.
+        </p>
+        <p>
+          Outside coursework, I'm usually in a lab environment somewhere between attacker and defender: poisoning
+          LLMNR traffic on one tab, hardening a Discord bot's permission model on another.
+        </p>
+        <div class="about-facts">
+          <div class="fact">
+            <span class="fact-label">location</span>
+            <span class="fact-value">Abbotsford, BC</span>
+          </div>
+          <div class="fact">
+            <span class="fact-label">program</span>
+            <span class="fact-value">B.CIS, UFV — 2024–present</span>
+          </div>
+          <div class="fact">
+            <span class="fact-label">status</span>
+            <span class="fact-value">Co-op Education Student</span>
+          </div>
+          <div class="fact">
+            <span class="fact-label">focus</span>
+            <span class="fact-value">Security Ops · Secure Dev · Networking</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-terminal reveal">
+        <div class="terminal-window">
+          <div class="terminal-titlebar">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+            <span class="terminal-title">coursework.log</span>
+          </div>
+          <div class="terminal-body static-body"><span class="ln">$ cat coursework.log</span><span class="out">[x] Security Fundamentals</span><span class="out">[x] Object-Oriented Programming</span><span class="out">[x] Introduction to Programming</span><span class="out">[x] Web Publishing</span><span class="out">[x] Systems Hardware Concepts</span><span class="out">[x] Project Management</span><span class="ln">$ _</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTS -->
+  <section id="certs" class="section alt">
+    <h2 class="section-heading"><span class="tag">02</span> certifications</h2>
+    <div class="cert-grid">
+      <div class="cert-card reveal">
+        <div class="cert-icon">GC</div>
+        <h3>Google Cybersecurity Professional Certificate</h3>
+        <p class="cert-date">September 2025</p>
+        <p class="cert-desc">Security Operations · Incident Response · SIEM</p>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">S+</div>
+        <h3>CompTIA Security+</h3>
+        <p class="cert-date">October 2025</p>
+        <p class="cert-desc">Network Security · Cryptography · Identity Management</p>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">CS</div>
+        <h3>Cyber Strike Challenge — Certificate of Achievement</h3>
+        <p class="cert-date">UFV &amp; IEEE Vancouver</p>
+        <p class="cert-desc">Cyber defence &amp; threat mitigation in a competitive AI-integrated security environment</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="section">
+    <h2 class="section-heading"><span class="tag">03</span> projects</h2>
+    <div class="project-list">
+
+      <article class="project-card reveal">
+        <div class="project-head">
+          <h3>Secure Discord Automation Bot</h3>
+          <span class="project-status">private repo</span>
+        </div>
+        <p class="project-stack">Python · discord.py · RBAC · API Security</p>
+        <ul class="project-points">
+          <li>Enforced a Role-Based Access Control (RBAC) hierarchy with input sanitization and least-privilege access across all sensitive commands, mitigating injection risk.</li>
+          <li>Secured API tokens via environment variables with runtime exception handling, eliminating hard-coded credential exposure.</li>
+        </ul>
+      </article>
+
+      <article class="project-card reveal">
+        <div class="project-head">
+          <h3>Penetration Testing Labs — Hack The Box</h3>
+          <span class="project-status">ongoing</span>
+        </div>
+        <p class="project-stack">Kali Linux · Nmap · Responder · Gobuster · Burp Suite</p>
+        <ul class="project-points">
+          <li>Captured NTLMv2 hashes via LLMNR/NBT-NS poisoning with Responder in a simulated Windows Active Directory environment.</li>
+          <li>Bypassed authentication by exploiting SQL injection vulnerabilities to enumerate backend databases.</li>
+          <li>Identified misconfigured FTP, SMB, and HTTP services with Nmap and Gobuster; built proficiency with Redis, MongoDB, and Rsync via OpenVPN-isolated labs.</li>
+        </ul>
+      </article>
+
+      <article class="project-card reveal">
+        <div class="project-head">
+          <h3>Cyber Strike Challenge</h3>
+          <span class="project-status">competition</span>
+        </div>
+        <p class="project-stack">Cyber Defence · AI Security · Threat Mitigation</p>
+        <ul class="project-points">
+          <li>Applied cyber defence and threat mitigation techniques in a competitive AI-integrated security environment.</li>
+          <li>Earned a Certificate of Achievement from UFV and IEEE Vancouver.</li>
+        </ul>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="section alt">
+    <h2 class="section-heading"><span class="tag">04</span> experience</h2>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-head">
+            <h3>SAP Operations Clerk</h3>
+            <span class="timeline-date">Nov 2022 — Oct 2024</span>
+          </div>
+          <p class="timeline-org">Real Canadian Superstore · Abbotsford, BC</p>
+          <ul class="project-points">
+            <li>Maintained inventory accuracy across hundreds of SKUs using SAP ERP material management and goods receipt modules.</li>
+            <li>Reduced stock discrepancies by reconciling physical and digital records through daily inventory scans and exception reporting.</li>
+            <li>Ensured audit readiness by maintaining detailed digital logs aligned with company data standards and compliance requirements.</li>
+            <li>Strengthened multitasking and cross-team communication in a high-volume, fast-paced retail environment.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section">
+    <h2 class="section-heading"><span class="tag">05</span> skills</h2>
+    <div class="skills-grid">
+      <div class="skill-group reveal">
+        <h4>languages</h4>
+        <div class="chips"><span>Python 3</span><span>C++</span><span>JavaScript</span></div>
+      </div>
+      <div class="skill-group reveal">
+        <h4>frameworks</h4>
+        <div class="chips"><span>discord.py</span></div>
+      </div>
+      <div class="skill-group reveal">
+        <h4>operating systems</h4>
+        <div class="chips"><span>Windows</span><span>macOS</span><span>Ubuntu</span><span>Kali Linux</span><span>Fedora</span><span>Solaris</span></div>
+      </div>
+      <div class="skill-group reveal">
+        <h4>security &amp; tools</h4>
+        <div class="chips"><span>Wireshark</span><span>Nmap</span><span>Responder</span><span>Gobuster</span><span>Burp Suite</span><span>SIEM</span><span>OpenVPN</span></div>
+      </div>
+      <div class="skill-group reveal">
+        <h4>infra &amp; data</h4>
+        <div class="chips"><span>VMware</span><span>VirtualBox</span><span>KVM</span><span>MySQL</span><span>SQLite</span><span>Linux CLI</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GITHUB -->
+  <section id="github" class="section alt">
+    <h2 class="section-heading"><span class="tag">06</span> github</h2>
+    <div class="github-panel reveal">
+      <div class="terminal-window">
+        <div class="terminal-titlebar">
+          <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          <span class="terminal-title">gh api users/Navkirat1</span>
+        </div>
+        <div class="terminal-body" id="githubStats">
+          <span class="ln">$ fetching github stats...</span>
+        </div>
+      </div>
+      <a href="https://github.com/Navkirat1" target="_blank" rel="noopener" class="btn btn-primary github-link">./github.com/Navkirat1</a>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE TERMINAL -->
+  <section id="term" class="section">
+    <h2 class="section-heading"><span class="tag">*</span> try it</h2>
+    <div class="terminal-window interactive-terminal reveal">
+      <div class="terminal-titlebar">
+        <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+        <span class="terminal-title">guest@navkiratwander.dev</span>
+      </div>
+      <div class="terminal-body" id="termOutput"><span class="out">Welcome. Type <strong>help</strong> to see available commands.</span></div>
+      <div class="terminal-input-row">
+        <span class="prompt">guest@navkiratwander.dev:~$</span>
+        <input type="text" id="termInput" autocomplete="off" spellcheck="false" aria-label="Terminal input" />
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section alt">
+    <h2 class="section-heading"><span class="tag">07</span> contact</h2>
+    <div class="contact-wrap reveal">
+      <p class="contact-lede">Open to co-op, internship, and entry-level security/dev roles.</p>
+      <div class="contact-grid">
+        <a href="mailto:navw604@gmail.com" class="contact-card">
+          <span class="contact-label">email</span>
+          <span class="contact-value">navw604@gmail.com</span>
+        </a>
+        <a href="https://linkedin.com/in/navkiratwander" target="_blank" rel="noopener" class="contact-card">
+          <span class="contact-label">linkedin</span>
+          <span class="contact-value">/in/navkiratwander</span>
+        </a>
+        <a href="https://github.com/Navkirat1" target="_blank" rel="noopener" class="contact-card">
+          <span class="contact-label">github</span>
+          <span class="contact-value">/Navkirat1</span>
+        </a>
+        <a href="tel:7785225887" class="contact-card">
+          <span class="contact-label">phone</span>
+          <span class="contact-value">778-522-5887</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>&copy; <span id="year"></span> Navkirat Wander. Built from scratch, no template.</p>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
