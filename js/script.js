@@ -41,7 +41,7 @@ async function loadGithubStats() {
       <div class="stat-tile"><span class="stat-value">${joined}</span><span class="stat-label">Member Since</span></div>
     `;
   } catch (e) {
-    el.innerHTML = `<div class="stat-tile" style="grid-column: 1 / -1;"><span class="stat-label">Unable to reach the GitHub API right now — <a href="https://github.com/Navkirat1" target="_blank" rel="noopener">view profile directly</a>.</span></div>`;
+    el.innerHTML = `<div class="stat-tile" style="grid-column: 1 / -1;"><span class="stat-label">Unable to reach the GitHub API right now. <a href="https://github.com/Navkirat1" target="_blank" rel="noopener">View profile directly</a>.</span></div>`;
   }
 }
 loadGithubStats();
@@ -75,7 +75,7 @@ function openCertModal(certId) {
     return;
   }
   certModalBackdrop.querySelector('#certModalTitle').textContent = cert.name;
-  certModalBackdrop.querySelector('.modal-issuer').textContent = `${cert.issuer} — ${cert.date}`;
+  certModalBackdrop.querySelector('.modal-issuer').textContent = `${cert.issuer} · ${cert.date}`;
   certModalBackdrop.querySelector('.modal-desc').textContent = cert.description;
   certModalBackdrop.querySelector('.modal-note').textContent = 'Public verification link coming soon.';
   certModalBackdrop.hidden = false;
@@ -103,7 +103,7 @@ const privilegedCommands = ['sudo', 'su', 'root', 'admin'];
 
 const commands = {
   help: () => `Available commands: <span class="mono">about, certs, projects, skills, contact, whoami, clear</span>`,
-  whoami: () => `navkirat_wander — B.CIS student, UFV | Security+ &amp; Google Cybersecurity certified`,
+  whoami: () => `navkirat_wander: BCIS student at UFV, Security+ &amp; Google Cybersecurity certified`,
   about: () => { scrollToSection('about'); return 'Jumping to About...'; },
   certs: () => { scrollToSection('certs'); return 'Jumping to Certifications...'; },
   projects: () => { scrollToSection('projects'); return 'Jumping to Projects...'; },
@@ -139,7 +139,7 @@ termInput.addEventListener('keydown', (e) => {
       const result = handler();
       if (result) printLine(result);
     } else {
-      printLine(`Command not found: ${escapeHtml(raw)} — type <span class="mono">help</span>`);
+      printLine(`Command not found: ${escapeHtml(raw)}. Type <span class="mono">help</span> to see what's available.`);
     }
   }
   termInput.value = '';
