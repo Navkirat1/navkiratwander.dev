@@ -95,9 +95,10 @@ mobile width and something narrower (~280px, for foldables) after layout changes
 
 ## Known open items
 
-- **HayuuugeBot** (Python/Discord/SQLite/RBAC project card) has a disabled "Repository — Coming Soon"
-  button — Navkirat is preparing that repo to publish separately. Swap `<button class="btn btn-disabled" disabled>`
-  for a real `<a href="...">` once the repo is public, and remove the `disabled`/dashed styling.
+- **HayuuugeBot** (the Python/Discord/SQLite/RBAC project) was **removed** from the Projects section
+  (2026-09-13) — the local project files were lost, so the card was pulled rather than link to a repo that
+  no longer exists. Navkirat plans to build a new project to fill this slot; add it as a fresh card when
+  ready rather than reviving the HayuuugeBot content, since it no longer reflects real, existing work.
 - **Microsoft SC-900** is in-progress (not yet earned) — no verify button, just a status badge + progress
   bar. Once earned, give it a proper "Earned" cert-card treatment matching Google/Security+, with a real
   verify link if one exists (Microsoft Learn / Credly).
