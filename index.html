@@ -204,6 +204,26 @@
 
       <article class="project-card reveal">
         <div class="project-card-top">
+          <h3>Matchmaking &amp; Leaderboard Service</h3>
+          <span class="status-badge status-earned">Live</span>
+        </div>
+        <p class="project-desc">
+          A Flask backend modeling what Demonware builds for Call of Duty at a small scale: a
+          matchmaking queue, skill-based pairing, and an Elo-rated leaderboard.
+        </p>
+        <ul class="project-points">
+          <li>Automatic matchmaking sorts the queue by rating and pairs whichever two waiting players have the closest skill gap.</li>
+          <li>Ratings update via Elo — the same system chess uses — so an upset win moves the needle more than an expected one.</li>
+          <li>Covered by a pytest suite that verifies the Elo math directly, not just that the app runs.</li>
+        </ul>
+        <div class="tag-row">
+          <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Elo Rating</span><span class="tag">Matchmaking</span>
+        </div>
+        <a href="https://github.com/Navkirat1/matchmaking-service" target="_blank" rel="noopener" class="btn btn-verify">View Source on GitHub</a>
+      </article>
+
+      <article class="project-card reveal">
+        <div class="project-card-top">
           <h3>Cyber Strike Challenge</h3>
           <span class="status-badge status-earned">Achievement</span>
         </div>

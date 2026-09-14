@@ -222,6 +222,14 @@ code, .mono { font-family: var(--font-mono); }
 
 /* ===== Projects ===== */
 .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
+/* If the last card ends up alone in a new row (e.g. a 4th card in a 3-column grid),
+   center it at normal card width instead of leaving it stuck in column 1. */
+.project-grid > .project-card:last-child:nth-child(3n+1) {
+  grid-column: 1 / -1;
+  justify-self: center;
+  max-width: 360px;
+  width: 100%;
+}
 .project-card {
   border: 1px solid var(--border); background: var(--panel); border-radius: var(--radius); padding: 28px;
   transition: border-color .2s ease, transform .2s ease; display: flex; flex-direction: column;
