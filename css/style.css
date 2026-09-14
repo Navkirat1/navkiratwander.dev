@@ -296,7 +296,7 @@ code, .mono { font-family: var(--font-mono); }
 
 /* ===== Contact ===== */
 .contact-lede { color: var(--text-dim); margin-bottom: 28px; }
-.contact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .contact-card {
   border: 1px solid var(--border); background: var(--panel); border-radius: var(--radius); padding: 18px;
   display: flex; flex-direction: column; gap: 6px; transition: border-color .2s ease, transform .2s ease;
