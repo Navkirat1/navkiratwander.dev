@@ -227,8 +227,8 @@ code, .mono { font-family: var(--font-mono); }
   transition: border-color .2s ease, transform .2s ease; display: flex; flex-direction: column;
 }
 .project-card:hover { border-color: var(--border-strong); transform: translateY(-4px); }
-.project-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
-.project-card-top h3 { font-size: 1.05rem; font-weight: 700; }
+.project-card-top { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 8px 10px; margin-bottom: 12px; }
+.project-card-top h3 { font-size: 1.05rem; font-weight: 700; min-width: 0; }
 .project-desc { color: var(--text-dim); font-size: 0.88rem; margin: 0 0 14px; }
 .project-points { margin: 0 0 16px; padding-left: 18px; color: var(--text-dim); font-size: 0.86rem; display: flex; flex-direction: column; gap: 8px; }
 .project-points li::marker { color: var(--accent); }
