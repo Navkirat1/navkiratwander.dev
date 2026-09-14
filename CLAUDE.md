@@ -70,6 +70,13 @@ Single-page site (`index.html`) with anchor-linked sections, styled by one style
   inside `.terminal-body`, don't put literal newlines between `<span>` elements — those spans are
   `display: block`, and `white-space: pre-wrap` on the parent turns a stray newline into a visible blank
   line. Keep such blocks on one line when editing.
+- `.project-grid` uses `repeat(auto-fit, minmax(280px, 1fr))`. If the number of project cards isn't a
+  multiple of the resolved column count (commonly 3 at desktop widths), the trailing card would otherwise
+  land alone in column 1 of a new row. A CSS rule already handles this —
+  `.project-grid > .project-card:last-child:nth-child(3n+1) { grid-column: 1 / -1; justify-self: center; max-width: 360px; }`
+  — which centers a lone trailing card instead. This only targets the *last* card when the total count is
+  1 more than a multiple of 3 (4, 7, 10...); if you ever switch the grid to a different column count, this
+  selector needs updating to match.
 
 ## Deployment
 
@@ -97,11 +104,26 @@ mobile width and something narrower (~280px, for foldables) after layout changes
 
 - **HayuuugeBot** (the Python/Discord/SQLite/RBAC project) was **removed** from the Projects section
   (2026-09-13) — the local project files were lost, so the card was pulled rather than link to a repo that
-  no longer exists. Navkirat plans to build a new project to fill this slot; add it as a fresh card when
-  ready rather than reviving the HayuuugeBot content, since it no longer reflects real, existing work.
+  no longer exists. Its slot has since been filled by two real projects (see below).
 - **Microsoft SC-900** is in-progress (not yet earned) — no verify button, just a status badge + progress
   bar. Once earned, give it a proper "Earned" cert-card treatment matching Google/Security+, with a real
   verify link if one exists (Microsoft Learn / Credly).
 - Two other projects from an earlier draft of this redesign — "Nexus" (university coursework, cloud
   companion-robot management system) and a C++ e-commerce OOP project — were explicitly **dropped** by
   Navkirat and should not be re-added without being asked again.
+
+## Sibling projects linked from this site
+
+Two other repos exist alongside this one, each with its own `CLAUDE.md` — check those before making
+changes to either:
+
+- **[secure-document-vault](https://github.com/Navkirat1/secure-document-vault)**
+  (`~/Documents/secure-document-vault`) — Flask app: auth, per-document RBAC, encryption at rest, audit log.
+- **[matchmaking-service](https://github.com/Navkirat1/matchmaking-service)**
+  (`~/Documents/matchmaking-service`) — Flask app: matchmaking queue, Elo ratings, leaderboard. Built
+  specifically as a relevant portfolio piece for a Demonware (Activision) Winter 2027 co-op application
+  (Software Development, Vancouver, Req R027954) — Demonware builds matchmaking/leaderboard/stats backend
+  services for Call of Duty, so this project intentionally models that at a small, explainable scale.
+  Navkirat has not yet reviewed or run this project's code themselves (as of 2026-09-14) — if they ask
+  about it and seem unfamiliar with a specific part, walk through it rather than assuming they already
+  know it, same as was done for secure-document-vault.
