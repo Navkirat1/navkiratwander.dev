@@ -184,6 +184,26 @@
 
       <article class="project-card reveal">
         <div class="project-card-top">
+          <h3>Secure Document Vault</h3>
+          <span class="status-badge status-earned">Live</span>
+        </div>
+        <p class="project-desc">
+          A Flask web app for storing and sharing files, built to demonstrate secure-by-default
+          engineering: per-document access control, encryption at rest, and a full audit trail.
+        </p>
+        <ul class="project-points">
+          <li>Enforced per-document RBAC — sharing grants are checked server-side on every request, not just hidden in the UI.</li>
+          <li>Encrypted every file with Fernet (AES) before it touches disk; plaintext is decrypted only in memory for an authorized download.</li>
+          <li>Logged every sensitive action (logins, uploads, downloads, share grants/revokes, access-denied attempts) to an admin-only audit log.</li>
+        </ul>
+        <div class="tag-row">
+          <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">RBAC</span><span class="tag">Encryption</span>
+        </div>
+        <a href="https://github.com/Navkirat1/secure-document-vault" target="_blank" rel="noopener" class="btn btn-verify">View Source on GitHub</a>
+      </article>
+
+      <article class="project-card reveal">
+        <div class="project-card-top">
           <h3>Cyber Strike Challenge</h3>
           <span class="status-badge status-earned">Achievement</span>
         </div>
